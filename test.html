@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Local Storage Api</title>
+    <script src="./localstorage.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        input {
+            width: 300px;
+            padding: 10px 20px;
+            border-radius: 3px;
+            background-color: antiquewhite;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, .3);
+            border: none;
+        }
+
+        button {
+            padding: 10px 30px;
+            background-color: aqua;
+            border: none;
+            color: #fff;
+            margin: 0;
+            cursor:pointer;
+        }
+
+        div {
+            padding: 40px;
+        }
+
+        .preview {
+            width: 300px;
+            background-color: aliceblue;
+            padding: 10px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body onload="getData()">
+
+    <div>
+        <p>Pure javascript localstorage Api</p>
+        <div>
+            <input id="test" placeholder="Test Input">
+            <div>
+                <button id="save">Save</button>
+                <button id="clear">Clear storage</button>
+            </div>
+        </div>
+        <div class="preview">
+            <ul id="det">
+                
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let btn = document.getElementById('save');
+        let clearr = document.getElementById('clear');
+
+        btn.onclick = function() {
+            let input = document.getElementById('test').value;
+            if(ls.setStorage('Value',input)) {
+                alert('Saved');
+                // here we get the saved value
+                let saved = ls.getStorage('Value');
+                let display='';
+
+                for(let i = 0; i < saved.length; i++) {
+                    display += `
+                        <li>${saved[i]}</li>
+                    `;
+                    let dis = document.getElementById('det').innerHTML=display;
+                }
+            }
+        }
+
+        clearr.onclick = function() {
+            // clear a particular storage
+            if(ls.checkStorage('Value')) {
+                if(ls.clearStorage('Value')) {
+                    getData();
+                    alert('Cleared');
+                }
+            }
+        }
+
+        getData = function() {
+            if(ls.checkStorage('Value')) {
+                let saved = ls.getStorage('Value');
+                let display='';
+
+                for(let i = 0; i < saved.length; i++) {
+                    display += `
+                        <li>${saved[i]}</li>
+                    `;
+                    let dis = document.getElementById('det').innerHTML=display;
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
